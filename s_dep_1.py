@@ -32,7 +32,7 @@ Please provide the facts you feel best describes you, then have pleasure in your
 left_column, right_column = st.columns(2)
 # Or even better, call Streamlit functions inside a "with" block:
 with left_column:
-    gender = st.radio('GENDER',('Female', 'Male', 'Unkown', 'Other'))
+    gender = st.radio('GENDER',('Male','Female', 'Other',  'Unkown'))
 
 
     
@@ -40,49 +40,48 @@ age = st.slider('AGE')  # 👈 this is a widget
 
 
 
-pro_df = pd.DataFrame({'aff_pro': ['direct', 'google', 'other', 'bing', 'facebook', 'padmapper', 'email_marketing', 'yahoo', 'facebook_open_graph', 'gsp', 'vast', 'naver', 'baidu', 'yandex', 'meetup', 'craigslist', 'daum']
+pro_df = pd.DataFrame({'aff_pro': ['direct', 'google', 'facebook', 'bing', 'yahoo', 'baidu', 'email_marketing', 'padmapper', 'facebook_open_graph', 'gsp', 'vast' ,'yandex', 'meetup', 'craigslist', 'daum', 'naver', 'other']
     })
 affiliate_provider = st.selectbox('AFFILIATE PROVIDER', pro_df['aff_pro'])
-#affiliate_provider = list(affiliate_provider)
-
-
-
-
-chn_df = pd.DataFrame({'aff_chn': ['direct', 'sem_brand', 'sem_non_brand', 'seo', 'api', 'content', 'other', 'remarketing']
-    })
-affiliate_channel = st.selectbox('AFFILIATE CHANNEL', chn_df['aff_chn'])
 # st widget to choose user's affiliate provider. Default = first value
 
 
 
+chn_df = pd.DataFrame({'aff_chn': ['seo', 'api', 'sem_brand', 'sem_non_brand', 'content', 'remarketing', 'direct', 'other']
+    })
+affiliate_channel = st.selectbox('AFFILIATE CHANNEL', chn_df['aff_chn'])
 
-# st widget to choose user's signup-methods and signup-apps. Default = first value
+
+
+
+
 
 left_column, right_column = st.columns(2)
-
 with right_column:
-    signup_app = st.radio('OS SELECTION',('Web', 'iOS', 'Android', 'Moweb'))
+    signup_app = st.radio('OS',('iOS','Web',  'Android', 'Moweb'))
 with left_column:
-    signup_method = st.radio('SIGNUP METHOD',('basic', 'facebook', 'google'))
+    signup_method = st.radio('SIGNUP METHOD',('basic', 'google', 'facebook'))
+# st widget to choose user's signup-methods and signup-apps. Default = first value    
+
+    
     
 
 
+browser = pd.DataFrame({'browser': ['Chrome', 'Chrome_Mobile', 'Android_Browser', 'Safari', 'Mobile_Safari','Mobile_Firefox', 'Apple_Mail', 'Firefox','SiteKiosk', 'IE', 'Chromium', 'Opera', 'Silk','AOL_Explorer','IE_Mobile','Opera_Mini', 'Maxthon','Sogou_Explorer', 'BlackBerry_Browser', 'Yandex_Browser', 'IceWeasel', 'Iron', 'wOSBrowser', 'SeaMonkey','TenFourFox', 'Mozilla', 'Googlebot', 'Outlook_2007', 'Pale_Moon','CoolNovo',  'IceDragon', 'TheWorld_Browser', 'RockMelt', 'Avant_Browser', 'unknown']})
+
+first_browser = st.selectbox('SELECT BROWSER', browser['browser'])
+# st widget to choose user's browser. Default = first value
  
+
+    
+
+device_df = pd.DataFrame({'device': ['Mac_Desktop', 'iPhone', 'iPad', 'Windows_Desktop', 'Android_Tablet', 'Desktop_Other', 'Android_Phone', 'Smartphone_Other','Other_Uknown']})
+
+first_device_type = st.selectbox('CHOOSE YOUR DEVICE', device_df['device'])
 # st widget to choose user's device type. Default = first value
 
-device_df = pd.DataFrame({'device': ['Mac_Desktop', 'Windows_Desktop', 'Desktop_Other', 'iPhone', 'iPad', 'Android_Phone', 'Android_Tablet', 'Smartphone_Other','Other_Uknown']})
-
-first_device_type = st.selectbox('What is your device type?', device_df['device'])
-
-#first_device_type = list(first_device_type)
 
 
-# st widget to choose user's browser. Default = first value
-
-browser_df = pd.DataFrame({'browser': ['Chrome', 'Safari', 'Firefox', 'IE', 'Chromium', 'Mobile_Safari', 'Chrome_Mobile', 'Android_Browser', 'Opera', 'Silk','AOL_Explorer','IE_Mobile','Mobile_Firefox', 'Maxthon', 'Apple_Mail','Sogou_Explorer', 'BlackBerry_Browser','SiteKiosk', 'Yandex_Browser', 'IceWeasel', 'Iron', 'Pale_Moon','CoolNovo', 'Opera_Mini', 'wOSBrowser', 'SeaMonkey','TenFourFox', 'Mozilla', 'Googlebot', 'Outlook_2007', 'IceDragon', 'TheWorld_Browser', 'RockMelt', 'Avant_Browser', 'unknown']})
-
-first_browser = st.selectbox('What is your browser?', browser_df['browser'])
-#first_browser = list(first_browser)
 
 # st widget to choose user's language. Default = first value
 
