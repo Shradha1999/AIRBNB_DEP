@@ -29,29 +29,30 @@ Please provide the facts you feel best describes you, then have pleasure in your
 ''')
 
 
-
 left_column, right_column = st.columns(2)
 # Or even better, call Streamlit functions inside a "with" block:
 with left_column:
-    gender = st.radio('Choose your Gender please...',('Female', 'Male', 'Unkown', 'Other'))
+    gender = st.radio('GENDER',('Female', 'Male', 'Unkown', 'Other'))
 
 
-age = st.slider('Age')  # 👈 this is a widget
+    
+age = st.slider('AGE')  # 👈 this is a widget
 
 
-aff_pro_df = pd.DataFrame({'aff_pro': ['direct', 'google', 'other', 'bing', 'facebook', 'padmapper', 'email_marketing', 'yahoo', 'facebook_open_graph', 'gsp', 'vast', 'naver', 'baidu', 'yandex', 'meetup', 'craigslist', 'daum']
+
+pro_df = pd.DataFrame({'aff_pro': ['direct', 'google', 'other', 'bing', 'facebook', 'padmapper', 'email_marketing', 'yahoo', 'facebook_open_graph', 'gsp', 'vast', 'naver', 'baidu', 'yandex', 'meetup', 'craigslist', 'daum']
     })
-
-affiliate_provider = st.selectbox('Your affiliate provider?', aff_pro_df['aff_pro'])
-
+affiliate_provider = st.selectbox('AFFILIATE PROVIDER', pro_df['aff_pro'])
 #affiliate_provider = list(affiliate_provider)
 
 
-aff_chn_df = pd.DataFrame({'aff_chn': ['direct', 'sem_brand', 'sem_non_brand', 'seo', 'api', 'content', 'other', 'remarketing']
-    })
-affiliate_channel = st.selectbox('Your affiliate channel?', aff_chn_df['aff_chn'])
 
+
+chn_df = pd.DataFrame({'aff_chn': ['direct', 'sem_brand', 'sem_non_brand', 'seo', 'api', 'content', 'other', 'remarketing']
+    })
+affiliate_channel = st.selectbox('AFFILIATE CHANNEL', chn_df['aff_chn'])
 # st widget to choose user's affiliate provider. Default = first value
+
 
 
 
@@ -59,12 +60,14 @@ affiliate_channel = st.selectbox('Your affiliate channel?', aff_chn_df['aff_chn'
 
 left_column, right_column = st.columns(2)
 
-with left_column:
-    signup_method = st.radio('Choose the method to signup...',('basic', 'facebook', 'google'))
-    
 with right_column:
-    signup_app = st.radio('Choose the OS you would use to signup...',('Web', 'iOS', 'Android', 'Moweb'))
+    signup_app = st.radio('OS SELECTION',('Web', 'iOS', 'Android', 'Moweb'))
+with left_column:
+    signup_method = st.radio('SIGNUP METHOD',('basic', 'facebook', 'google'))
+    
 
+
+ 
 # st widget to choose user's device type. Default = first value
 
 device_df = pd.DataFrame({'device': ['Mac_Desktop', 'Windows_Desktop', 'Desktop_Other', 'iPhone', 'iPad', 'Android_Phone', 'Android_Tablet', 'Smartphone_Other','Other_Uknown']})
@@ -72,6 +75,7 @@ device_df = pd.DataFrame({'device': ['Mac_Desktop', 'Windows_Desktop', 'Desktop_
 first_device_type = st.selectbox('What is your device type?', device_df['device'])
 
 #first_device_type = list(first_device_type)
+
 
 # st widget to choose user's browser. Default = first value
 
