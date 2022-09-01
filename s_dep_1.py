@@ -21,7 +21,7 @@ start = time.time()
 
 st.header('AIRBNB TRAVEL DESTINATION PREDICTOR')
 st.subheader('''
-(A model deployment by SHRADHANJALI  PRADHAN )''')
+(A model deployment by SHRADHANJALI )''')
 st.write('''
 Consider yourself an American traveller who made a reservation for a vacation spot on the Airbnb website.
 This programme essentially uses machine learning to determine your top 5 potential trip locations.
