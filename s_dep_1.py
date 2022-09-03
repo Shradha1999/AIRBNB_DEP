@@ -137,42 +137,43 @@ if L_DF == 'Catalan':
 if L_DF == 'Hungarian':
     language = 'hu'
 
-
+# Time is "simulated" in this cell. The time in the training set represents the entire amount of time (in seconds) that a user spends choosing a location.
+# It is impossible to obtain an actual time range equivalent to those in training data because we are inputting numbers during deployment very quickly.
+# As a result, I made some adjustments to keep the time range consistent with the training data.
 # this cell fetches suer's account created day and month
 account_month_df = pd.DataFrame({'month': [x for x in range(1,13)]})
 account_day_df = pd.DataFrame({'day': [x for x in range(1,32)]})
-account_created_month = st.selectbox('When did you create the account (Month)?', account_month_df['month'])
-account_created_day = st.selectbox('When did you create the account (Day)?', account_day_df['day'])
+account_created_month = st.selectbox('MONTH WHEN YOU HAVE CREATED THE ACCOUNT', account_month_df['month'])
+account_created_day = st.selectbox('DAY WHEN YOU HAVE CREATED THE ACCOUNT', account_day_df['day'])
 
 
-# this cell 'simulates' time. The time in training data denotes total time (in seconds) a user spends to book a destination.
-# Since we're entering values during deployment very quickly, its impossible to get actual time range similar to those in trng dat.
-# Hence I have done some maniplations so that the time-range remains same as those in training data
-
-num = random.randint(2, 50)
-end = time.time()
-secs_elapsed = num*(end - start)*100000
 
 # forming a dataframe of query point
+rand_n = random.randint(2, 50)
+end = time.time()
+secs_elapsed = rand_n * (end - start)*100000
+
+
 
 qp_df = pd.DataFrame({'gender': gender,
                      'age': age,
-                     'signup_method' : signup_method,
                      'signup_flow' : 0,
                      'language' : language,
-                     'affiliate_channel': affiliate_channel,
-                     'affiliate_provider' : affiliate_provider,
+                     'signup_method' : signup_method,
                      'signup_app' : signup_app,
-                     'first_device_type' : first_device_type ,
+                     'affiliate_provider' : affiliate_provider,
+                     'affiliate_channel': affiliate_channel,
                      'first_browser' : first_browser,
-                     'account_created_day' : account_created_day,
+                     
+                     'first_device_type' : first_device_type ,
                      'account_created_month': account_created_month,
-                     'first_booking_day': 0,
+                     'account_created_day' : account_created_day,
                      'first_booking_month' : 0,
-                      'action': 'create',
-                      'action_type' : '-unknown-  -unknown-',
-                      'action_detail' : '-unknown-  -unknown-',
-                      'secs_elapsed' : secs_elapsed
+                     'first_booking_day': 0,
+                     'action': 'create',
+                     'action_type' : '-unknown-  -unknown-',
+                     'action_detail' : '-unknown-  -unknown-',
+                     'secs_elapsed' : secs_elapsed
                      }, index=[0])
 
 query_point = qp_df
