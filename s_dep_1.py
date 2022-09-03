@@ -85,67 +85,65 @@ first_device_type = st.selectbox('CHOOSE YOUR DEVICE', device_df['device'])
 
 # st widget to choose user's language. Default = first value
 
-lang_df = pd.DataFrame({'language': ['English', 'Chinese Mandarin', 'Korean', 'French', 'Espanol', 'German', 'Russian', 'Italian', 'Japanese', 'Portugese','Swedish','Dutch','Polish', 'Turkish', 'Danish','Thai', 'Chinese Simplified','Bahasa Indonesia', 'Greek', 'Norwegian', 'Finnish', 'Hungarian','IS', 'Catalan']})
+language_data = pd.DataFrame({'language': ['English', 'French', 'Italian', 'Chinese Mandarin', 'Chinese Simplified', 'Korean', 'Espanol', 'Hungarian', 'German', 'Russian', 'Japanese', 'Portugese','Swedish','Dutch','Polish', 'Turkish', 'Danish','Thai','Bahasa Indonesia', 'Greek', 'Norwegian', 'Finnish','IS', 'Catalan']})
+L_DF = st.selectbox('SELECT YOUR LANGUAGE', language_data['language'])
 
-lang = st.selectbox('What language do you speak?', lang_df['language'])
-
-if lang == 'English':
+if L_DF == 'English':
     language = 'en'
-if lang == 'Chinese Mandarin':
+if L_DF == 'French':
+    language = 'fr' 
+if L_DF == 'Italian':
+    language = 'it'   
+if L_DF == 'Chinese Mandarin':
     language = 'zh'
-if lang == 'Korean':
+if L_DF == 'Chinese Simplified':
+    language = 'cs'    
+if L_DF == 'Korean':
     language = 'ko'
-if lang == 'French':
-    language = 'fr'
-if lang == 'Espanol':
-    language = 'es'
-if lang == 'German':
-    language = 'de'
-if lang == 'Russian':
+if L_DF == 'Russian':
     language = 'ru'
-if lang == 'Italian':
-    language = 'it'
-if lang == 'Japanese':
+if L_DF == 'German':
+    language = 'de'
+if L_DF == 'Japanese':
     language = 'ja'
-if lang == 'Portugese':
-    language = 'pt'
-if lang == 'Swedish':
-    language = 'sv'
-if lang == 'Dutch':
-    language = 'nl'
-if lang == 'Polish':
-    language = 'pl'
-if lang == 'Turkish':
-    language = 'tr'
-if lang == 'Danish':
-    language = 'da'
-if lang == 'Thai':
+if L_DF == 'Espanol':
+    language = 'es'
+if L_DF == 'Thai':
     language = 'th'
-if lang == 'Chinese Simplified':
-    language = 'cs'
-if lang == 'Bahasa Indonesia':
-    language = 'id'
-if lang == 'Greek':
-    language = 'el'
-if lang == 'Norwegian':
-    language = 'no'
-if lang == 'Finnish':
+if L_DF == 'Portugese':
+    language = 'pt'
+if L_DF == 'Swedish':
+    language = 'sv'
+if L_DF == 'Dutch':
+    language = 'nl'
+if L_DF == 'Polish':
+    language = 'pl'
+if L_DF == 'Turkish':
+    language = 'tr'   
+if L_DF == 'Danish':
+    language = 'da'
+if L_DF == 'Finnish':
     language = 'fi'
-if lang == 'Hungarian':
-    language = 'hu'
-if lang == 'IS':
+if L_DF == 'Bahasa Indonesia':
+    language = 'id'
+if L_DF == 'Norwegian':
+    language = 'no'
+if L_DF == 'Greek':
+    language = 'el'
+if L_DF == 'IS':
     language = 'is'
-if lang == 'Catalan':
+if L_DF == 'Catalan':
     language = 'ca'
+if L_DF == 'Hungarian':
+    language = 'hu'
 
-#language = list(language)
 
 # this cell fetches suer's account created day and month
-
-account_day_df = pd.DataFrame({'day': [x for x in range(1,32)]})
 account_month_df = pd.DataFrame({'month': [x for x in range(1,13)]})
-account_created_day = st.selectbox('When did you create the account (Day)?', account_day_df['day'])
+account_day_df = pd.DataFrame({'day': [x for x in range(1,32)]})
 account_created_month = st.selectbox('When did you create the account (Month)?', account_month_df['month'])
+account_created_day = st.selectbox('When did you create the account (Day)?', account_day_df['day'])
+
 
 # this cell 'simulates' time. The time in training data denotes total time (in seconds) a user spends to book a destination.
 # Since we're entering values during deployment very quickly, its impossible to get actual time range similar to those in trng dat.
