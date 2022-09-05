@@ -16,6 +16,16 @@ import pickle
 import random
 from scipy.sparse import hstack
 
+# # Performing the prediction
+from sklearn import svm
+from sklearn.linear_model import LogisticRegression
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from xgboost import XGBClassifier
+from tqdm import tqdm
+
 
 start = time.time()
 
@@ -155,70 +165,67 @@ secs_elapsed = rand_n * (end - start)*100000
 
 
 
-qp_df = pd.DataFrame({'gender': gender,
+query_point_data = pd.DataFrame({'gender': gender,
                      'age': age,
-                     'signup_flow' : 0,
                      'language' : language,
+                     'signup_flow' : 0,
                      'signup_method' : signup_method,
                      'signup_app' : signup_app,
-                     'affiliate_provider' : affiliate_provider,
                      'affiliate_channel': affiliate_channel,
+                     'affiliate_provider' : affiliate_provider,
                      'first_browser' : first_browser,
-                     
+                     'account_created_day' : account_created_day,
                      'first_device_type' : first_device_type ,
                      'account_created_month': account_created_month,
-                     'account_created_day' : account_created_day,
-                     'first_booking_month' : 0,
                      'first_booking_day': 0,
+                     'first_booking_month' : 0,
+                     'action_detail' : '-unknown-  -unknown-',
                      'action': 'create',
                      'action_type' : '-unknown-  -unknown-',
-                     'action_detail' : '-unknown-  -unknown-',
                      'secs_elapsed' : secs_elapsed
                      }, index=[0])
 
-query_point = qp_df
-st.write('Query Point:')
-query_point
+q_p = query_point_data
+st.write('VERIFY YOUR DATA')
+q_p
+# separating out the features in query point
+print(q_p.columns)
+print(q_p.shape)
 
-print(query_point.columns)
 
-print(query_point.shape)
 
-#separating out the features in query point
+gender = q_p['gender'].values
+age = q_p['age'].values
+language = q_p['language'].values
+signup_flow = q_p['signup_flow'].values
+signup_method = q_p['signup_method'].values
+affiliate_provider = q_p['affiliate_provider'].values
+affiliate_channel = q_p['affiliate_channel'].values
+signup_app = q_p['signup_app'].values
+first_browser = q_p['first_browser'].values
+first_device_type = q_p['first_device_type'].values
+account_created_month = q_p['account_created_month'].values
+account_created_day = q_p['account_created_day'].values
+first_booking_month = q_p['first_booking_month'].values
+first_booking_day = q_p['first_booking_day'].values
+action_type = q_p['action_type'].values
+action = q_p['action'].values
+action_detail = q_p['action_detail'].values
+secs_elapsed = q_p['secs_elapsed'].values
 
-gender = query_point['gender'].values
-age = query_point['age'].values
-signup_method = query_point['signup_method'].values
-signup_flow = query_point['signup_flow'].values
-language = query_point['language'].values
-affiliate_channel = query_point['affiliate_channel'].values
-affiliate_provider = query_point['affiliate_provider'].values
-signup_app = query_point['signup_app'].values
-first_device_type = query_point['first_device_type'].values
-first_browser = query_point['first_browser'].values
-account_created_day = query_point['account_created_day'].values
-account_created_month = query_point['account_created_month'].values
-first_booking_day = query_point['first_booking_day'].values
-first_booking_month = query_point['first_booking_month'].values
-action = query_point['action'].values
-action_type = query_point['action_type'].values
-action_detail = query_point['action_detail'].values
-secs_elapsed = query_point['secs_elapsed'].values
-
-# bringing in the pre-trained vectorizers and the Model
-path = 'C:\BNB_Deployment\Model_Vectors'
-
-gender_vectorizer = pickle.load(open('gender_vectorizer.pkl', 'rb'))
-#action_vectorizer = pickle.load(open('action_vectorizer.pkl', 'rb'))
+# Introducing the Model and pre-trained vectorizers
+path = 'C:\case_study_1\deployment'
+# action_vectorizer = pickle.load(open('action_vectorizer.pkl', 'rb'))
 action_detail_vectorizer = pickle.load(open('action_detail_vectorizer.pkl', 'rb'))
+gender_vectorizer = pickle.load(open('gender_vectorizer.pkl', 'rb'))
+first_browser_vectorizer = pickle.load(open('first_browser_vectorizer.pkl', 'rb'))
+first_device_type_vectorizer = pickle.load(open('first_device_type_vectorizer.pkl', 'rb'))
 action_type_vectorizer = pickle.load(open('action_type_vectorizer.pkl', 'rb'))
 affiliate_channel_vectorizer = pickle.load(open('affiliate_channel_vectorizer.pkl', 'rb'))
 affiliate_provider_vectorizer = pickle.load(open('affiliate_provider_vectorizer.pkl', 'rb'))
-first_browser_vectorizer = pickle.load(open('first_browser_vectorizer.pkl', 'rb'))
-first_device_type_vectorizer = pickle.load(open('first_device_type_vectorizer.pkl', 'rb'))
-language_vectorizer = pickle.load(open('language_vectorizer.pkl', 'rb'))
 signup_app_vectorizer = pickle.load(open('signup_app_vectorizer.pkl', 'rb'))
 signup_method_vectorizer = pickle.load(open('signup_method_vectorizer.pkl', 'rb'))
+language_vectorizer = pickle.load(open('language_vectorizer.pkl', 'rb'))
 
 
 # # Vectorizing non-numeric features
@@ -234,24 +241,20 @@ print('Shape:',vector_gender.shape)
 #vector_action = action_vectorizer.transform(action)
 vector_action = pickle.load(open('action_vector.pkl', 'rb'))
 print('Shape:',vector_action.shape)
-#print(vector_action.toarray())
-#vector_action
+
 
 # vectorizing action_detail
 
 vector_action_detail = action_detail_vectorizer.transform(action_detail)
 
 print('Shape:',vector_action_detail.shape)
-#print(vector_action_detail.toarray())
-#vector_action_detail
 
 # vectorizing action_type
 
 vector_action_type = action_type_vectorizer.transform(action_type)
 
 print('Shape:',vector_action_type.shape)
-#print(vector_action_type.toarray())
-#vector_action_type
+
 
 # vectorizing affiliate_channel
 
@@ -259,7 +262,7 @@ vector_affiliate_channel = affiliate_channel_vectorizer.transform(affiliate_chan
 
 print('Shape:',vector_affiliate_channel.shape)
 print(vector_affiliate_channel.toarray())
-#vector_affiliate_channel
+
 
 # vectorizing affiliate_provider
 
@@ -267,7 +270,7 @@ vector_affiliate_provider = affiliate_provider_vectorizer.transform(affiliate_pr
 
 print('Shape:',vector_affiliate_provider.shape)
 print(vector_affiliate_provider.toarray())
-#vector_affiliate_provider
+
 
 # vectorizing first_browser
 
@@ -275,7 +278,7 @@ vector_first_browser = first_browser_vectorizer.transform(first_browser)
 
 print('Shape:',vector_first_browser.shape)
 print(vector_first_browser.toarray())
-#vector_first_browser
+
 
 # vectorizing first_device_type
 
@@ -283,14 +286,14 @@ vector_first_device_type = first_device_type_vectorizer.transform(first_device_t
 
 print('Shape:',vector_first_device_type.shape)
 print(vector_first_device_type.toarray())
-#vector_first_device_type
+
 
 # vectorizing language
 
 vector_language = language_vectorizer.transform(language)
 print('Shape:',vector_language.shape) 
 print(vector_language.toarray())
-#vector_language
+
 
 # vectorizing signup_app
 
@@ -298,7 +301,7 @@ vector_signup_app = signup_app_vectorizer.transform(signup_app)
 
 print('Shape:',vector_signup_app.shape)
 print(vector_signup_app.toarray())
-#vector_signup_app
+
 
 # vectorizing signup_method
 
@@ -306,7 +309,7 @@ vector_signup_method = signup_method_vectorizer.transform(signup_method)
 
 print('Shape:',vector_signup_method.shape)
 print(vector_signup_method.toarray())
-#vector_signup_method
+
 
 # input to the model for prediction
 
@@ -330,19 +333,6 @@ input = hstack((vector_gender,
                 secs_elapsed)).tocsr()
 
 print(input.shape)
-
-
-# # Performing the prediction
-
-import numpy as np
-from sklearn import svm
-from sklearn.linear_model import LogisticRegression
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
-from xgboost import XGBClassifier
-from tqdm import tqdm
 
 # instentiating the models
 
@@ -423,7 +413,7 @@ dests  = ['Australia', 'Canada', 'Denmark', 'Espain', 'France', 'Great Britain',
 
 # Getting the final results
 
-'Starting the prediction...'
+'PREDICTING THE DESTINATIONS'
 
 # Add a placeholder
 latest_iteration = st.empty()
@@ -435,19 +425,19 @@ for i in range(11):
   bar.progress(10*i)
   time.sleep(0.1)
 
-'Done!'
+'YOU ARE ALMOST DONE!'
 
 pred_df = pd.DataFrame({'Destination': dests,
                        'Probability (%)' : preds[0]*100})
 
 top_5_dests = pred_df.sort_values(by=['Probability (%)'], ascending=False)[:5]
-st.write("According to my Machine Learning model's prediction, here are your top 5 destinations you might be interested in:")
-st.write(top_5_dests['Destination'])
+st.write("MODEL INTERPRETATION")
+st.write(top_5_dests['TOP_5 DESTINATION THAT YOU MIGHT CHOOSE'])
 
 # this cell is to shoe model interptratation
 
-if st.checkbox('Show Model interpretation'):
+if st.checkbox('MODEL INTERPRETATION'):
     top_5_dests
     
-st.write('*********** PREDICTION ENDS HERE. THANK YOU FOR GIVING IT A TRY! ****************')
+st.write('THANK YOU FOR VISITING THIS SITE.... HAPPY JOURNEY...')
 
