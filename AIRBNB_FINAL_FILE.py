@@ -2,6 +2,19 @@
 # coding: utf-8
 
 # In[58]:
+"""Train and evaluate AirBnB Recommender System
+
+This script is designed to train and evaluate a recommendation model.
+It begins with loading and partitioning our datasets, then going straight
+into training and evaluation. Results will be outputted for the training and
+validation set. It also features plotting feature importances,
+since our model is an XGB classifier. Finally, it will output the test set
+predictions that can be uploaded to kaggle to view the score on the leaderboard.
+Prior to running this script, please ensure the datasets have been made
+by running `make_dataset.py` under our `data` directory. The list of datasets
+are listed in the documentation of the script.
+
+"""
 
 
 import numpy as np
@@ -24,16 +37,15 @@ start = time.time()
 # In[63]:
 
 
+start = time.time()
+
 st.header('AIRBNB TRAVEL DESTINATION PREDICTOR')
 st.subheader('''
-(A model deployment by Harshal Pal)''')
+(A model deployment by SHRADHANJALI )''')
 st.write('''
-
-Imagine you are an American tourist who visited the Airbnb website to book your holiday destination. \
-This app basically predicts, using ML, your top 5 destinations you might be interested in to travel.
-
-Please fill up your informations that you believe suits you the most, and enjoy your predictions!
-
+Consider yourself an American traveller who made a reservation for a vacation spot on the Airbnb website.
+This programme essentially uses machine learning to determine your top 5 potential trip locations.
+Please provide the facts you feel best describes you, then have pleasure in your forecasts.
 ''')
 
 
