@@ -28,25 +28,25 @@ This programme essentially uses machine learning to determine your top 5 potenti
 Please provide the facts you feel best describes you, then have pleasure in your forecasts.
 ''')
 
-age = st.slider('Age')  # 👈 this is a widget
+age = st.slider('AGE')  # 👈 this is a widget
 
 left_column, right_column = st.columns(2)
 
 # Or even better, call Streamlit functions inside a "with" block:
 with left_column:
-    gender = st.radio('Choose your Gender please...',('Female', 'Male', 'Unkown', 'Other'))
+    gender = st.radio('SELECT YOUR GENDER',('Female', 'Male', 'Unkown', 'Other'))
 
 aff_chn_df = pd.DataFrame({'aff_chn': ['direct', 'sem_brand', 'sem_non_brand', 'seo', 'api', 'content', 'other', 'remarketing']
     })
 
-affiliate_channel = st.selectbox('Your affiliate channel?', aff_chn_df['aff_chn'])
+affiliate_channel = st.selectbox('SELECT YOUR MEDIUM', aff_chn_df['aff_chn'])
 
 # st widget to choose user's affiliate provider. Default = first value
 
 aff_pro_df = pd.DataFrame({'aff_pro': ['direct', 'google', 'other', 'bing', 'facebook', 'padmapper', 'email_marketing', 'yahoo', 'facebook_open_graph', 'gsp', 'vast', 'naver', 'baidu', 'yandex', 'meetup', 'craigslist', 'daum']
     })
 
-affiliate_provider = st.selectbox('Your affiliate provider?', aff_pro_df['aff_pro'])
+affiliate_provider = st.selectbox('CHOOSE YOUR PROVIDER', aff_pro_df['aff_pro'])
 
 #affiliate_provider = list(affiliate_provider)
 
@@ -55,7 +55,7 @@ affiliate_provider = st.selectbox('Your affiliate provider?', aff_pro_df['aff_pr
 left_column, right_column = st.columns(2)
 
 with left_column:
-    signup_method = st.radio('Choose the method to signup...',('basic', 'facebook', 'google'))
+    signup_method = st.radio('METHOD TO SIGNUP',('basic', 'facebook', 'google'))
     
 with right_column:
     signup_app = st.radio('Choose the OS you would use to signup...',('Web', 'iOS', 'Android', 'Moweb'))
