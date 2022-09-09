@@ -58,13 +58,13 @@ with left_column:
     signup_method = st.radio('METHOD TO SIGNUP',('basic', 'facebook', 'google'))
     
 with right_column:
-    signup_app = st.radio('Choose the OS you would use to signup...',('Web', 'iOS', 'Android', 'Moweb'))
+    signup_app = st.radio('SIGNUP METHOD',('Web', 'iOS', 'Android', 'Moweb'))
 
 # st widget to choose user's device type. Default = first value
 
 device_df = pd.DataFrame({'device': ['Mac_Desktop', 'Windows_Desktop', 'Desktop_Other', 'iPhone', 'iPad', 'Android_Phone', 'Android_Tablet', 'Smartphone_Other','Other_Uknown']})
 
-first_device_type = st.selectbox('What is your device type?', device_df['device'])
+first_device_type = st.selectbox('CHOOSE YOUR DEVICE', device_df['device'])
 
 #first_device_type = list(first_device_type)
 
@@ -72,14 +72,14 @@ first_device_type = st.selectbox('What is your device type?', device_df['device'
 
 browser_df = pd.DataFrame({'browser': ['Chrome', 'Safari', 'Firefox', 'IE', 'Chromium', 'Mobile_Safari', 'Chrome_Mobile', 'Android_Browser', 'Opera', 'Silk','AOL_Explorer','IE_Mobile','Mobile_Firefox', 'Maxthon', 'Apple_Mail','Sogou_Explorer', 'BlackBerry_Browser','SiteKiosk', 'Yandex_Browser', 'IceWeasel', 'Iron', 'Pale_Moon','CoolNovo', 'Opera_Mini', 'wOSBrowser', 'SeaMonkey','TenFourFox', 'Mozilla', 'Googlebot', 'Outlook_2007', 'IceDragon', 'TheWorld_Browser', 'RockMelt', 'Avant_Browser', 'unknown']})
 
-first_browser = st.selectbox('What is your browser?', browser_df['browser'])
+first_browser = st.selectbox('SELECT BROWSER', browser_df['browser'])
 #first_browser = list(first_browser)
 
 # st widget to choose user's language. Default = first value
 
 lang_df = pd.DataFrame({'language': ['English', 'Chinese Mandarin', 'Korean', 'French', 'Espanol', 'German', 'Russian', 'Italian', 'Japanese', 'Portugese','Swedish','Dutch','Polish', 'Turkish', 'Danish','Thai', 'Chinese Simplified','Bahasa Indonesia', 'Greek', 'Norwegian', 'Finnish', 'Hungarian','IS', 'Catalan']})
 
-lang = st.selectbox('What language do you speak?', lang_df['language'])
+lang = st.selectbox('SELECT YOUR LANGUAGE', lang_df['language'])
 
 if lang == 'English':
     language = 'en'
@@ -136,8 +136,8 @@ if lang == 'Catalan':
 
 account_day_df = pd.DataFrame({'day': [x for x in range(1,32)]})
 account_month_df = pd.DataFrame({'month': [x for x in range(1,13)]})
-account_created_day = st.selectbox('When did you create the account (Day)?', account_day_df['day'])
-account_created_month = st.selectbox('When did you create the account (Month)?', account_month_df['month'])
+account_created_day = st.selectbox('MONTH WHEN YOU HAVE CREATED THE ACCOUNT', account_day_df['day'])
+account_created_month = st.selectbox('DAY WHEN YOU HAVE CREATED THE ACCOUNT', account_month_df['month'])
 
 # this cell 'simulates' time. The time in training data denotes total time (in seconds) a user spends to book a destination.
 # Since we're entering values during deployment very quickly, its impossible to get actual time range similar to those in trng dat.
@@ -416,7 +416,7 @@ dests  = ['Australia', 'Canada', 'Denmark', 'Espain', 'France', 'Great Britain',
 
 # Getting the final results
 
-'Starting the prediction...'
+'*** PREDICTING THE DESTINATIONS ***'
 
 # Add a placeholder
 latest_iteration = st.empty()
@@ -428,7 +428,7 @@ for i in range(11):
   bar.progress(10*i)
   time.sleep(0.1)
 
-'Done!'
+'YOU ARE ALMOST DONE!'
 
 pred_df = pd.DataFrame({'Destination': dests,
                        'Probability (%)' : preds[0]*100})
@@ -439,8 +439,8 @@ st.write(top_5_dests['Destination'])
 
 # this cell is to shoe model interptratation
 
-if st.checkbox('Show Model interpretation'):
+if st.checkbox('MODEL INTERPRETATION'):
     top_5_dests
     
-st.write('*********** PREDICTION ENDS HERE. THANK YOU FOR GIVING IT A TRY! ****************')
+st.write('THANK YOU FOR VISITING THIS SITE.... HAPPY JOURNEY...')
 
