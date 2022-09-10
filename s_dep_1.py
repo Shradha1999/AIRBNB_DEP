@@ -186,7 +186,7 @@ qp_df = pd.DataFrame({'gender': gender,
                      }, index=[0])
 
 query_point = qp_df
-st.write('ENTER YOUR QUERY')
+st.write('VERIFY YOUR DETAILS')
 query_point
 
 print(query_point.columns)
