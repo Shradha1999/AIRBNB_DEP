@@ -28,18 +28,13 @@ This programme essentially uses machine learning to determine your top 5 potenti
 Please provide the facts you feel best describes you, then have pleasure in your forecasts.
 ''')
 
-age = st.slider('AGE')  # 👈 this is a widget
-
 left_column, right_column = st.columns(2)
-
 # Or even better, call Streamlit functions inside a "with" block:
 with left_column:
-    gender = st.radio('SELECT YOUR GENDER',('Female', 'Male', 'Unkown', 'Other'))
+    gender = st.radio('GENDER',('Male','Female', 'Other',  'Unkown'))
+    
+age = st.slider('AGE')  # 👈 this is a widget
 
-aff_chn_df = pd.DataFrame({'aff_chn': ['direct', 'sem_brand', 'sem_non_brand', 'seo', 'api', 'content', 'other', 'remarketing']
-    })
-
-affiliate_channel = st.selectbox('SELECT YOUR MEDIUM', aff_chn_df['aff_chn'])
 
 # st widget to choose user's affiliate provider. Default = first value
 
@@ -48,17 +43,41 @@ aff_pro_df = pd.DataFrame({'aff_pro': ['direct', 'google', 'other', 'bing', 'fac
 
 affiliate_provider = st.selectbox('CHOOSE YOUR PROVIDER', aff_pro_df['aff_pro'])
 
+
+
+aff_chn_df = pd.DataFrame({'aff_chn': ['direct', 'sem_brand', 'sem_non_brand', 'seo', 'api', 'content', 'other', 'remarketing']
+    })
+
+affiliate_channel = st.selectbox('SELECT YOUR MEDIUM', aff_chn_df['aff_chn'])
+
+
+
+
+
+
+
 #affiliate_provider = list(affiliate_provider)
 
 # st widget to choose user's signup-methods and signup-apps. Default = first value
 
 left_column, right_column = st.columns(2)
 
+with right_column:
+    signup_app = st.radio('SIGNUP METHOD',('Web', 'iOS', 'Android', 'Moweb'))
+
 with left_column:
     signup_method = st.radio('METHOD TO SIGNUP',('basic', 'facebook', 'google'))
     
-with right_column:
-    signup_app = st.radio('SIGNUP METHOD',('Web', 'iOS', 'Android', 'Moweb'))
+
+    
+# st widget to choose user's browser. Default = first value
+
+browser_df = pd.DataFrame({'browser': ['Chrome', 'Safari', 'Firefox', 'IE', 'Chromium', 'Mobile_Safari', 'Chrome_Mobile', 'Android_Browser', 'Opera', 'Silk','AOL_Explorer','IE_Mobile','Mobile_Firefox', 'Maxthon', 'Apple_Mail','Sogou_Explorer', 'BlackBerry_Browser','SiteKiosk', 'Yandex_Browser', 'IceWeasel', 'Iron', 'Pale_Moon','CoolNovo', 'Opera_Mini', 'wOSBrowser', 'SeaMonkey','TenFourFox', 'Mozilla', 'Googlebot', 'Outlook_2007', 'IceDragon', 'TheWorld_Browser', 'RockMelt', 'Avant_Browser', 'unknown']})
+
+first_browser = st.selectbox('SELECT BROWSER', browser_df['browser'])
+#first_browser = list(first_browser) 
+
+
 
 # st widget to choose user's device type. Default = first value
 
@@ -66,14 +85,11 @@ device_df = pd.DataFrame({'device': ['Mac_Desktop', 'Windows_Desktop', 'Desktop_
 
 first_device_type = st.selectbox('CHOOSE YOUR DEVICE', device_df['device'])
 
+
+
 #first_device_type = list(first_device_type)
 
-# st widget to choose user's browser. Default = first value
 
-browser_df = pd.DataFrame({'browser': ['Chrome', 'Safari', 'Firefox', 'IE', 'Chromium', 'Mobile_Safari', 'Chrome_Mobile', 'Android_Browser', 'Opera', 'Silk','AOL_Explorer','IE_Mobile','Mobile_Firefox', 'Maxthon', 'Apple_Mail','Sogou_Explorer', 'BlackBerry_Browser','SiteKiosk', 'Yandex_Browser', 'IceWeasel', 'Iron', 'Pale_Moon','CoolNovo', 'Opera_Mini', 'wOSBrowser', 'SeaMonkey','TenFourFox', 'Mozilla', 'Googlebot', 'Outlook_2007', 'IceDragon', 'TheWorld_Browser', 'RockMelt', 'Avant_Browser', 'unknown']})
-
-first_browser = st.selectbox('SELECT BROWSER', browser_df['browser'])
-#first_browser = list(first_browser)
 
 # st widget to choose user's language. Default = first value
 
@@ -170,7 +186,7 @@ qp_df = pd.DataFrame({'gender': gender,
                      }, index=[0])
 
 query_point = qp_df
-st.write('Query Point:')
+st.write('ENTER YOUR QUERY')
 query_point
 
 print(query_point.columns)
@@ -416,7 +432,7 @@ dests  = ['Australia', 'Canada', 'Denmark', 'Espain', 'France', 'Great Britain',
 
 # Getting the final results
 
-'*** PREDICTING THE DESTINATIONS ***'
+' PREDICTING THE DESTINATIONS '
 
 # Add a placeholder
 latest_iteration = st.empty()
@@ -424,7 +440,7 @@ bar = st.progress(0)
 
 for i in range(11):
   # Update the progress bar with each iteration.
-  latest_iteration.text(f'Prediction progress : {10*i}%')
+  latest_iteration.text(f'PREDICTION STATUS : {10*i}%')
   bar.progress(10*i)
   time.sleep(0.1)
 
@@ -434,7 +450,7 @@ pred_df = pd.DataFrame({'Destination': dests,
                        'Probability (%)' : preds[0]*100})
 
 top_5_dests = pred_df.sort_values(by=['Probability (%)'], ascending=False)[:5]
-st.write("According to my Machine Learning model's prediction, here are your top 5 destinations you might be interested in:")
+st.write("TOP_5 DESTINATION THAT YOU MIGHT CHOOSE:")
 st.write(top_5_dests['Destination'])
 
 # this cell is to shoe model interptratation
